@@ -70,25 +70,22 @@ This proves medium/heavy/viral users can sustain subscription with activity, whi
     * Withdrawal
     * AdView.
 
-This project was built with [Lovable](https://lovable.dev).
-
-**Live app**: https://chezzie.lovable.app
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/01b21825-d0d2-402c-8718-5bbc41baecb1).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+The frontend is a Vite application backed by Supabase. Copy `.env.example` to
+`.env.local` and provide the public Supabase project URL and publishable key.
+Never place a Supabase service-role key in a browser environment file.
 
 ```sh
 git clone <this-repository-url>
 cd <repository-name>
-npm i
-npm run dev
+bun install
+bun run dev
 ```
+
+## Production
+
+Run `bun run build` to create the static application in `dist`. The deployment
+host must serve `index.html` for unknown paths so React Router routes work when
+opened directly. Add every production origin to the Supabase Authentication URL
+configuration before testing sign-in or email confirmation.

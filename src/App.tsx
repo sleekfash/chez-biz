@@ -1,16 +1,18 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
-import Landing from "./pages/Landing";
-import Gallery from "./pages/Gallery";
-import Press from "./pages/Press";
-import Events from "./pages/Events";
-import Dashboard from "./pages/Dashboard";
-import Auth from "./pages/Auth";
-import NotFound from "./pages/NotFound";
+
+const Landing = lazy(() => import("./pages/Landing"));
+const Gallery = lazy(() => import("./pages/Gallery"));
+const Press = lazy(() => import("./pages/Press"));
+const Events = lazy(() => import("./pages/Events"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Auth = lazy(() => import("./pages/Auth"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
@@ -21,6 +23,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <Suspense fallback={<main className="min-h-screen bg-background" aria-busy="true" aria-label="Loading page" />}>
           <Routes>
             {/* Public Artist Pages */}
             <Route path="/" element={<Landing />} />
@@ -37,6 +40,7 @@ const App = () => (
             {/* Catch-all */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </Suspense>
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
